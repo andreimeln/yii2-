@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Aneks;
 
 /**
  * Site controller
@@ -29,6 +30,11 @@ class SiteController extends Controller
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['create-anek'],
+                        'allow' => true,
+                        'roles' => ['?'],
                     ],
                 ],
             ],
@@ -95,4 +101,23 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
+    public function actionCreateAnek()
+    {
+	$anek = new Aneks();
+ 	$post = Yii::$app->request->post("Aneks");
+	if (count($post))
+	{
+		$anek->text = $post['text'];
+		$anek->image = $post['image'];
+		if ($anek->save())
+		{
+			$anek = new Aneks();
+		}
+	}
+       return $this->render("create-anek", [
+		'anek' => $anek
+	]);
+    }
+
 }
