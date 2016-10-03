@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use common\models\Aneks;
+use common\models\TwitPost;
 
 /**
  * Site controller
@@ -32,7 +33,12 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['create-anek'],
+                        'actions' => ['create-tweet'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['gettimenow'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -102,22 +108,33 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    public function actionCreateAnek()
+    public function actionCreateTweet()
     {
-	$anek = new Aneks();
- 	$post = Yii::$app->request->post("Aneks");
-	if (count($post))
-	{
-		$anek->text = $post['text'];
-		$anek->image = $post['image'];
-		if ($anek->save())
-		{
-			$anek = new Aneks();
-		}
-	}
-       return $this->render("create-anek", [
-		'anek' => $anek
-	]);
+        $tweet = new TwitPost();
+
+        $post = Yii::$app->request->post("Twitpost");
+        if (count($post)) {
+            $tweet->text = $post['text'];
+            $tweet->save();
+        }
+        return $this->render("create-tweet", [
+            'tweet' => $tweet
+        ]);
     }
 
+    public function actionGettimenow()
+    {
+        $timenow = new TwitPost();
+
+        $post = Yii::$app->request->post("TwitPost");
+        if (count($post))
+        {
+            $timenow->text = $post['text'];
+            $timenow->save();
+        }
+
+        return $this->render("gettimenow", [
+            'timenow' => $timenow
+        ]);
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\TwitPost;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -39,7 +40,7 @@ class BlogController extends Controller
      */
     public function actionIndex()
     {
-	$title = 'Привет миру от Андрея Мельникова';
+	$title = 'Hello from our company\'s Twitter';
         return $this->render('index', [
 		'caption' => $title		
 	]);
@@ -48,8 +49,7 @@ class BlogController extends Controller
     public function actionHello()
     {
 
-
-	$aneks = Aneks::find()->all();
+	$twits = TwitPost::find()->all();
 /*
 	$anek->text = 'Hello';
 	if ($anek->save())
@@ -62,7 +62,7 @@ class BlogController extends Controller
 */
 	$title = 'Hello!';
         return $this->render('feed', [
-		'aneks' => $aneks		
+		'twits' => $twits
 	]);
     }
 }

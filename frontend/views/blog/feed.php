@@ -10,7 +10,7 @@ $this->title = "Анекдоты";
           <div class="row">
             <div class="col-sm-6">
 	      <?php
-	      foreach ($aneks as $a)
+	      foreach ($twits as $a)
 	      {
 	      ?>
               <section class="blog-post">
